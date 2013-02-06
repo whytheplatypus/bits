@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT="-1">
+    <title>x-todo test</title>
+    <link rel="stylesheet" type="text/css" href="../x-timer.css"/>
+    <script src="x-tag.js"></script>
+    <script src="../x-timer.js"></script>
+</head>
+<body>
+    <x-timer id="test-timer" data-fps="60" data-color="rgba(40, 40, 40, 0.5)" data-time="20"></x-timer>
+    <script>
+      document.getElementById("test-timer").addEventListener('done', function(e){console.log("I finished my run!");}, false);
+      document.getElementById("test-timer").addEventListener('tick', function(e){console.log("there are "+e.detail.remaining+" seconds left");}, false);
+    </script>
+</body>
+</html>

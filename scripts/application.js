@@ -21,7 +21,6 @@ requirejs.config({
     tooltip: "framework/bootstrap/bootstrap-tooltip",
     transition: "framework/bootstrap/bootstrap-transition",
     typeahead: "framework/bootstrap/bootstrap-typeahead",
-    progressbar: "framework/bootstrap-progressbar/bootstrap-progressbar"
   },
   shim: {
     affix: {
@@ -61,9 +60,6 @@ requirejs.config({
       deps: ["jquery"]
     },
     typeahead: {
-      deps: ["jquery"]
-    },
-    progressbar:{
       deps: ["jquery"]
     },
     backbone: {
