@@ -1,0 +1,22 @@
+{
+    "author": "Your Name",
+    "name": "bits",
+    "version": "0.0.0",
+    "dependencies": {
+        "restify": "*",
+        "mongoose": "~3.0.3",
+        "package-parser": "*"
+    },
+    "devDependencies": {},
+    "coffeebone": {
+        "settings": {
+            "publicDir": "app",
+            "sessionSecret": "sldfubh",
+            "mongo": {
+                "host": "localhost",
+                "dbName": "bits"
+            },
+            "port": 9898
+        }
+    }
+}
