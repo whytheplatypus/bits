@@ -16,19 +16,31 @@ define(['text!templates/byte.handlebars', 'backbone', 'models/bit', 'views/bitVi
         var self = this;
         this.model.on('change', self.render, this);
         this.el.addEventListener('delete', function(){self.close(false);}, false);
+        var close = function(){
+            this.close(true);
+        }
+        this.model.on('destroy', close, this);
     },
     onRender: function() {},
     onRendered: function() {
         return this.el;
     },
     onClose: function() {},
-    onClosed: function() {},
+    onClosed: function() {
+        $('#wordPanel').removeClass('active2');
+        $('#wordPanel').addClass('active');
+        $("#bytePanel").removeClass('active');
+    },
     events: {
         "click .add_bit" : "addBit",
         "blur .byte_name" : "updateName",
+        "click .remove_byte" : "removeByte",
         "keypress .byte_name"  : "blurName",
         "focus .byte_description" : "rawDescription",
         "blur .byte_description" : "updateDescription"
+    },
+    removeByte: function(){
+        this.model.destroy();
     },
     blurName: function(e){
         if (e.keyCode == 13){
@@ -68,7 +80,7 @@ define(['text!templates/byte.handlebars', 'backbone', 'models/bit', 'views/bitVi
       this.$el.removeData().unbind();
       this.$el.empty();
       if (removeElement) {
-        this.remove();
+        //this.remove();
       }
       if (this.onClosed) {
         return this.onClosed();

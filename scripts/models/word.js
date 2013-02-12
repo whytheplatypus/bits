@@ -34,6 +34,11 @@ define(['./../collections/byteCollection', 'backbone'], function(ByteCollection,
                         model.trigger('change');
                     });
                 });
+                model.get('bytes').on('remove', function(){
+                    model.commit(function(){
+                        model.trigger('change');
+                    });
+                });
                 if(callback instanceof Function){ 
                     callback();
                 }
@@ -49,6 +54,11 @@ define(['./../collections/byteCollection', 'backbone'], function(ByteCollection,
         var self = this;
         this.set({'bytes': new ByteCollection(this.get('bytes'))}, {silent: true});
         this.get('bytes').on('add', function(){
+            self.commit(function(){
+                self.trigger('change');
+            });
+        });
+        this.get('bytes').on('remove', function(){
             self.commit(function(){
                 self.trigger('change');
             });
