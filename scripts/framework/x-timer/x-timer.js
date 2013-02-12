@@ -1,15 +1,15 @@
 (function(){
-	xtag.register('x-timer', {
-		content: '<canvas></canvas>',
-		onCreate: function(){
+    xtag.register('x-timer', {
+        content: '<canvas></canvas>',
+        onCreate: function(){
             // fired once at the time a component 
             // is initially created or parsed
-	    },
-	    onInsert: function(){
+        },
+        onInsert: function(){
             //based on http://irae.pro.br/lab/canvas_pie_countdown/
             var self = this;
-	        // fired each time a component 
-	        // is inserted into the DOM
+            // fired each time a component 
+            // is inserted into the DOM
             var canvas = xtag.query(this, 'canvas')[0];
             canvas.addEventListener('touchend', function(event){
                 event.preventDefault();
@@ -42,29 +42,29 @@
             self.dataset['start'] = self.dataset['start']?self.dataset['start']:1;
             self.dataset['fps'] = self.dataset['fps']?self.dataset['fps']:40;
             self.stop();
-	    },
-	    events: {
+        },
+        events: {
             'dblclick:delegate(canvas)': function(event, timer){
                 timer.stop();
             }
-	    },
-	    getters: {
+        },
+        getters: {
             remaining: function(){
                 return parseFloat(this.dataset.remaining);
             },
             total: function(){
                 return parseFloat(this.dataset.time);
             }
-	    },
-	    setters: {
+        },
+        setters: {
             remaining: function(left){
                 this.dataset.remaining = left;
             },
             total: function(total){
                 this.dataset.time = total;
             }
-	    },
-	    methods: {
+        },
+        methods: {
             _draw_next: function(step) { // step between 0 and 1
                 var canvas = xtag.query(this, 'canvas')[0];
                 var ctx = canvas.getContext('2d');
@@ -92,16 +92,17 @@
             start: function(){
                 var self = this;
                 delete this.dataset['paused'];
-                var total = self.dataset['fps']*parseFloat(this.getAttribute("data-time"));
+                var total = parseFloat(this.getAttribute("data-time"))*1000;//self.dataset['fps']*parseFloat(this.getAttribute("data-time"));
                 var remaining = total;
                 if(this.dataset['remaining']){
-                    remaining = self.dataset['fps']*this.dataset['remaining'];
+                    remaining = parseFloat(this.dataset['remaining']);
                 }
+                var startTime = Date.now();
                 var done = new CustomEvent("done");
                 var previous = self.dataset['start'];
                 var delayed = function(frame){
                     var step = 1-frame/total;
-                    var left = Math.ceil(frame/self.dataset['fps']);
+                    var left = frame;//Math.ceil(frame/self.dataset['fps']);
                     //return function() {
                     if(previous != left){
                         var tick = new CustomEvent("tick", {"detail":{'remaining': left}});
@@ -110,13 +111,15 @@
                         previous = left;
                     }
                     self._draw_next(step);
+                    var tempTime = Date.now();
                     //pauses on window change.. no good
                     //put webworkers in?
                     if(frame > 0 && !self.dataset['paused']){
-                        self.dataset['timeout'] = setTimeout(delayed,1000/self.dataset['fps'], --frame);
+                        self.dataset['timeout'] = setTimeout(delayed,1000/self.dataset['fps'], remaining-(tempTime-startTime));
                     } else if(frame < 1){
                         self.dispatchEvent(done);
                     }
+                    //startTime = tempTime;
                 };
                 delayed(remaining);
             },
@@ -133,6 +136,6 @@
             _reset: function(){
                 delete this.dataset['remaining'];
             }
-	    }
-	});
+        }
+    });
 })();
