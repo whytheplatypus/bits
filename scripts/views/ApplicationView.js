@@ -6,6 +6,7 @@ define(['text!templates/Application.handlebars', 'backbone', 'models/word', 'vie
       var self = this;
       this.model.on('change', this.render, this);
       this.model.on('add', function(model){model.commit();self.render();});
+      //this.model.on('remove', function(model){console.log("delete");});
       this.model.fetch();
       //this.model.on('change', function(){console.log("saving");self.model.save()});
       //this.render();

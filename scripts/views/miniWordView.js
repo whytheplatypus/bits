@@ -12,7 +12,12 @@ define(['text!templates/miniWord.handlebars', './wordView', 'backbone', 'marked'
   });
   return Backbone.View.extend({
     className: 'mini-word',
-    initialize: function() {},
+    initialize: function() {
+        var close = function(){
+            this.close(true);
+        }
+        this.model.on('destroy', close, this);
+    },
     onRender: function() {},
     onRendered: function() {},
     onClose: function() {},
