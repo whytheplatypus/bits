@@ -21,7 +21,8 @@ requirejs.config({
     tooltip: "framework/bootstrap/bootstrap-tooltip",
     transition: "framework/bootstrap/bootstrap-transition",
     typeahead: "framework/bootstrap/bootstrap-typeahead",
-    progressbar: "framework/bootstrap-progressbar/bootstrap-progressbar"
+    progressbar: "framework/bootstrap-progressbar/bootstrap-progressbar",
+    howler: "framework/howler"
   },
   shim: {
     affix: {
@@ -69,6 +70,9 @@ requirejs.config({
     backbone: {
       deps: ["lodash", "jquery", "affix", "alert", "button", "carousel", "collapse", "dropdown", "modal", "popover", "scrollspy", "tab", "tooltip", "transition", "typeahead"],
       exports: "Backbone"
+    },
+    howler: {
+      exports: "Howl"
     }
   }
 });
